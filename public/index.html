@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <script src='js/jquery.min.js'></script>
+
+
+    
+    <meta charset="UTF-8">
+    <title>Flat UI Login</title>
+    
+    
+    
+    
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <div id="wrap">
+  <div id="regbar">
+    <div id="navthing">
+      <h2><a href="#" id="loginform">Register</a> | <a href="/a.html">login</a></h2>
+    <div class="login">
+      <div class="arrow-up"></div>
+      <div class="formholder">
+        <div class="randompad">
+           <fieldset>
+           <form >
+             <label name="email">rollNo</label>
+             <input type="email" id="rollNo">
+             <label name="password">Password</label>
+             <input type="password"  id ="password"/>
+             <button id ="btm" value="Login" >login</button>
+            </form>
+            <script type="text/javascript">
+            //window.alert();
+              $("#btm").click(function(){
+                  $.post( "http://localhost:8080/api/todos", 
+
+                    { rollNo: $("#rollNo").val(),
+                     password : $("#password").val()},
+              function( data ) {
+                var data=data;console.log(data);
+                    document.getElementById("rollNo").value="Welcome "+data[0].rollNo.substring(0,data[0].rollNo.lastIndexOf('@'));
+
+                      // console.log(data);
+              });
+              });
+            </script>
+           </fieldset>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+  
+        <script src="js/index.js"></script>
+    
+    
+  </body>
+</html>
