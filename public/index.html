@@ -34,22 +34,33 @@
              <input type="email" id="rollNo">
              <label name="password">Password</label>
              <input type="password"  id ="password"/>
-             <button id ="btm" value="Login" >login</button>
+             <button id ="btm" value="Register" >Register</button>
             </form>
             <script type="text/javascript">
             //window.alert();
               $("#btm").click(function(){
-                  $.post( "http://localhost:8080/api/todos", 
+                  $.post( "/api/todos", 
 
                     { rollNo: $("#rollNo").val(),
                      password : $("#password").val()},
-              function( data ) {
-                var data=data;console.log(data);
-                    document.getElementById("rollNo").value="Welcome "+data[0].rollNo.substring(0,data[0].rollNo.lastIndexOf('@'));
+               function( data ) {
+                //document.write()
+                 if(data=="done")
+                  window.location.href = '/login'       
+              else{
+
+                  document.getElementById("rollNo").value="Oops try again Somethig Wrong ";
+                    }
+              });
+                
+
+
+                            // var data=data;console.log(data);
+              //       document.getElementById("rollNo").value="Welcome "+data[0].rollNo.substring(0,data[0].rollNo.lastIndexOf('@'));
 
                       // console.log(data);
-              });
-              });
+             });
+              
             </script>
            </fieldset>
         </div>

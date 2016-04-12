@@ -43,14 +43,23 @@
     //})
     // api ---------------------------------------------------------------------
     // get all todos
-    app.get('/api/todos', function(req, res) {
-
+    app.get('/login', function(req, res) {
+        //console.log(req.body.do);
+        if (req.params.do=="just load it!")
+             res.sendfile('./public/login.html');
+            //res.sendfile('./public/login.html')
+        else{   var todos=req;
         // use mongoose to get all todos in the database
-       Todo.find(function(err, todos) {
+       Todo.findOne(function(err, todos) {
                 if (err)
                     res.send(err)
-                res.json(todos);
+               
+                    if (todos.password)
+
+               //res.send(req);
+               //res.json(todos);
             });
+        }
     });
 
     // create todo and send back all todos after creation
@@ -65,15 +74,15 @@
 //console.log (todo);
         todo.save(function(err, todo) {
             if (err)
-                res.send(err);
-
+               return res.send(err);
+            res.send("done");
            // get and return all the todos after you create another
-            Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
-                if (err)
-                      res.send(err)
-                console.log(todos)
-                res.send(todos);
-            });
+            // Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
+            //     if (err)
+            //           res.send(err)
+            //     console.log(todos)
+            //     res.send(todos);
+            // });
 
         });
 

@@ -1,0 +1,27 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+</head>
+<body>
+<label name="email">rollNo</label>
+             <input type="email" id="rollNo">
+             <label name="password">Password</label>
+             <input type="password"  id ="password"/>
+             <button id ="btm" value="Login" >login</button>
+            </form>
+            <script type="text/javascript">
+              $("#btm").click(function(){
+                  $.post( "http://localhost:8080/public/login", 
+
+                    { rollNo: $("#rollNo").val(),
+                     password : $("#password").val()})
+              .done(function( data ) {
+                var data=data;
+                      // console.log(data);
+              });
+              });
+            </script>
+</body>
+</html>
+             
