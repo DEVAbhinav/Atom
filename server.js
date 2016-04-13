@@ -7,11 +7,23 @@
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
     var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-    
+    var MongoClient = require('mongodb').MongoClient;
+    var assert= require('assert');
 
     // configuration =================
+    var uri= 'mongodb://localhost:27017/test';
+    MongoClient.connect(uri,function (err,db) {
+        assert.equal(null,err);
+        console.log("Connected Sussfull baby!");
+        db.close();
+        // body...
+    });
+    
 
-    mongoose.connect('mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu');     // connect to mongoDB database on modulus.io
+
+
+
+   // mongoose.connect('mongodb://node:nodeuser@mongo.onmodulus.net:27017/uwO3mypu');     // connect to mongoDB database on modulus.io
 
     app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
     app.use(morgan('dev'));                                         // log every request to the console
@@ -73,21 +85,12 @@
         });
            // var todos=req;
        //  // use mongoose to get all todos in the database
-        Todo.find({rollNo:'req.body.rollNo'},function(err, todo) {
+        get and return all the todos after you create another
+            Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
                 if (err)
-                    res.send(err)
-               
-                if (todo[0].password==null)
-                    return  {status:'user exist'};
-
-                 else
-                    {todo.save(function(err, todo) {
-                     if (err)
-                         return res.send(err);
-                    res.send("done");
-       //         //res.send(req);
-       //         //res.json(todos); 
-                        });
+                      res.send(err)
+                console.log(todos)
+                res.send(todos);
              }
 
 
@@ -136,6 +139,7 @@
     });
 
     */
+    // no changes
 
     // listen (start app with node server.js) ======================================
     app.listen(8080);
