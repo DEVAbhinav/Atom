@@ -45,9 +45,9 @@
     // get all todos
     app.get('/login', function(req, res) {
         //console.log(req.body.do);
-      //  if (req.params.do=="just load it!")
-             res.sendfile('./public/login.html');
-            //res.sendfile('./public/login.html')
+      // if (req.params.do=="just load it!")
+             res.sendfile('./login.html');
+            
        //  else{   var todos=req;
        //  // use mongoose to get all todos in the database
        // Todo.find(function(err, todos) {
@@ -63,7 +63,7 @@
     });
 
     // create todo and send back all todos after creation
-    app.post('/api/todos', function(req, res) {
+    app.post('/register', function(req, res) {
        // console.log(req);
         // create a todo, information comes from AJAX request from Angular
       // console.log(req.body);
@@ -71,11 +71,34 @@
             rollNo : req.body.rollNo,
             password : req.body.password,
         });
+           // var todos=req;
+       //  // use mongoose to get all todos in the database
+        Todo.find({rollNo:'req.body.rollNo'},function(err, todo) {
+                if (err)
+                    res.send(err)
+               
+                if (todo[0].password==null)
+                    return  {status:'user exist'};
+
+                 else
+                    {todo.save(function(err, todo) {
+                     if (err)
+                         return res.send(err);
+                    res.send("done");
+       //         //res.send(req);
+       //         //res.json(todos); 
+                        });
+             }
+
+
+
+
+       // var todo = new Todo({            
+       //      rollNo : req.body.rollNo,
+       //      password : req.body.password,
+       
 //console.log (todo);
-        todo.save(function(err, todo) {
-            if (err)
-               return res.send(err);
-            res.send("done");
+       
            // get and return all the todos after you create another
             // Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
             //     if (err)
@@ -89,7 +112,7 @@
     });
     
     // application -------------------------------------------------------------
-    app.get('*', function(req, res) {
+    app.get('/', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 

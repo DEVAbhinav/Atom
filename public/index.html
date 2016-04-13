@@ -39,14 +39,15 @@
             <script type="text/javascript">
             //window.alert();
               $("#btm").click(function(){
-                  $.post( "/api/todos", 
+                  $.post( "/register", 
 
                     { rollNo: $("#rollNo").val(),
                      password : $("#password").val()},
                function( data ) {
                 //document.write()
                  if(data=="done")
-                  window.location.href = './login'       
+                  // $.get( "./login")//{do :"Just do it buddy"},function(){})
+                   window.location.href = './login'       
               else{
 
                   document.getElementById("rollNo").value="Oops try again Somethig Wrong ";
