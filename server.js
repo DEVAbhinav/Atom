@@ -45,21 +45,21 @@
     // get all todos
     app.get('/login', function(req, res) {
         //console.log(req.body.do);
-        if (req.params.do=="just load it!")
+      //  if (req.params.do=="just load it!")
              res.sendfile('./public/login.html');
             //res.sendfile('./public/login.html')
-        else{   var todos=req;
-        // use mongoose to get all todos in the database
-       Todo.findOne(function(err, todos) {
-                if (err)
-                    res.send(err)
+       //  else{   var todos=req;
+       //  // use mongoose to get all todos in the database
+       // Todo.find(function(err, todos) {
+       //          if (err)
+       //              res.send(err)
                
-                    if (todos.password)
-
-               //res.send(req);
-               //res.json(todos);
-            });
-        }
+       //              if (todos.password)
+       //                      console.log('User exist');
+       //         //res.send(req);
+       //         //res.json(todos);
+       //      });
+       //  }
     });
 
     // create todo and send back all todos after creation
