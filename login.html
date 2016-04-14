@@ -20,8 +20,15 @@
                      password : $("#password").val()})
               .done(function( data ) {
                 var data=data;
-                 document.getElementById("rollNo").value="Welcome"+data;
+                if(data=="Oh you are right!"){
 
+
+                	window.location.href = './home'
+                 //document.getElementById("rollNo").value="Welcome"+data;
+                }
+                else{
+                	document.getElementById("rollNo").value=data;
+                }	
                       // console.log(data);
               });
               });

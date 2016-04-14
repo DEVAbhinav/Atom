@@ -41,6 +41,14 @@
 
 
 // routes ======================================================================
+
+    app.get('/home', function(req, res) {
+        
+             res.sendfile('./home.html');
+         });
+
+
+
     app.post('/login',function(req,res){
         MongoClient.connect(url,function(err,db){
             assert.equal(null, err);
@@ -51,30 +59,30 @@
 
 
             var validateandenter=function(db,callback){
-                var clooection=db.collection("user");
-                collection.findOne({"rollNo": "req"}),
+                var collection=db.collection("user");
+                collection.findOne({"rollNo": "req"},
                     function (err,data) {
-                        if (data.rollNo){
+                        console.log(data);
+                        if (data != null){
                             if(data.password==req.body.password){
                                 callback();
                                 res.send("Oh you are right!");
                             }
                             else{
+                                callback();
                                 res.send("You try to fool me bastard!");
                             }
                         
                         }
-                        else(){
+                        else
+                        {
+                            callback();
                             res.send("Invalid user");
                         }
-                    }
+                    });
 
             }
-
-
-
-
-        });
+    });
 
 
 
@@ -122,7 +130,7 @@
 
 
         var checkpresenceandadd = function(db,callback){
-            var check = db.collection("user").findOne({"rollNo" : req.body.rollNo},function(err,doc){
+            db.collection("user").findOne({"rollNo" : req.body.rollNo},function(err,doc){
                 if(err)
                     return console.log(err);
 
@@ -212,7 +220,7 @@
 //    });
     
     // application -------------------------------------------------------------
-    app.get('/', function(req, res) {
+    app.get('*', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 
