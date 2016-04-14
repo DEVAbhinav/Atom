@@ -49,6 +49,31 @@
             });
         });
 
+
+            var validateandenter=function(db,callback){
+                var clooection=db.collection("user");
+                collection.findOne({"rollNo": "req"}),
+                    function (err,data) {
+                        if (data.rollNo){
+                            if(data.password==req.body.password){
+                                callback();
+                                res.send("Oh you are right!");
+                            }
+                            else{
+                                res.send("You try to fool me bastard!");
+                            }
+                        
+                        }
+                        else(){
+                            res.send("Invalid user");
+                        }
+                    }
+
+            }
+
+
+
+
         });
 
 
