@@ -32,30 +32,39 @@
    // app.use(session({secret: 'ssshhhhh'}));
 
     
-    // define model =================
-    var Todo = mongoose.model('Todo', {
-        rollNo : String,
-        password : String
-    });
+    // // define model =================
+    // var Todo = mongoose.model('Todo', {
+    //     rollNo : String,
+    //     password : String
+    // });
 
 
 
 // routes ======================================================================
     app.post('/login',function(req,res){
-        
+        MongoClient.connect(url,function(err,db){
+            assert.equal(null, err);
+            validateandenter(db, function(){
+                db.close();
+            });
+        });
+
+        });
 
 
 
-        var pass=todo.findOne({ 'rollNo':req.body.rollNo }, function (err, todo) {
-      if (err) return handleError(err);
-      if(pass.password==req.body.password){
-       var sess=req.session;
-       console.log("Welcome"+sess);
-      }
 
-    })
-    })
-            //  api ---------------------------------------------------------------------
+
+    //     var pass=todo.findOne({ 'rollNo':req.body.rollNo }, function (err, todo) {
+    //   if (err) return handleError(err);
+    //   if(pass.password==req.body.password){
+    //    var sess=req.session;
+    //    console.log("Welcome"+sess);
+    //   }
+
+    // })
+    // })
+    //         //  api ---------------------------------------------------------------------
             //get all todos
     app.get('/login', function(req, res) {
         //console.log(req.body.do);
