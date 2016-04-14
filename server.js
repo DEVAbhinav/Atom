@@ -11,14 +11,12 @@
     var assert= require('assert');
 
     // configuration =================
-    var uri= 'mongodb://localhost:27017/test';
-    MongoClient.connect(uri,function (err,db) {
-        assert.equal(null,err);
-        console.log("Connected Sussfull baby!");
-        db.close();
-        // body...
-    });
-    
+           var url = 'mongodb://localhost:27017/atom';
+        MongoClient.connect(url, function(err, db) {
+          assert.equal(null, err);
+          console.log("Connected correctly to atom server baby!.");
+          db.close();
+        });
 
 
 
@@ -43,18 +41,22 @@
 
 
 // routes ======================================================================
-    // app.post('/login',function(req,res){
-    //     var pass=todo.findOne({ 'rollNo':req.body.rollNo }, function (err, todo) {
-    //   if (err) return handleError(err);
-    //   if(pass.password==req.body.password){
-    //    var sess=req.session;
-    //    console.log("Welcome"+sess);
-    //   }
+    app.post('/login',function(req,res){
+        
 
-    // })
-    //})
-    // api ---------------------------------------------------------------------
-    // get all todos
+
+
+        var pass=todo.findOne({ 'rollNo':req.body.rollNo }, function (err, todo) {
+      if (err) return handleError(err);
+      if(pass.password==req.body.password){
+       var sess=req.session;
+       console.log("Welcome"+sess);
+      }
+
+    })
+    })
+            //  api ---------------------------------------------------------------------
+            //get all todos
     app.get('/login', function(req, res) {
         //console.log(req.body.do);
       // if (req.params.do=="just load it!")
@@ -76,22 +78,83 @@
 
     // create todo and send back all todos after creation
     app.post('/register', function(req, res) {
+               MongoClient.connect(url, function(err, db) {
+              assert.equal(null, err);
+              checkpresenceandadd(db, function() {
+                  db.close();
+                 // return "done"
+          });
+        });
+
+
+        var checkpresenceandadd = function(db,callback){
+            var check = db.collection("user").findOne({"rollNo" : req.body.rollNo},function(err,doc){
+                if(err)
+                    return console.log(err);
+
+                 if (doc != null){
+                    callback();
+                return res.send({"status":"Fucking user already exist",});}
+           else
+            {
+                db.collection("user").insertOne({            
+            "rollNo" : req.body.rollNo,
+             "password" : req.body.password,},
+             function(err, result) {
+                                assert.equal(err, null);
+                                console.log("Inserted a document into the User collection.");
+                               
+                                callback();
+                                res.send("done");
+
+
+                                });
+              }  
+
+
+            });
+        }
+           // console.log(check);
+
+           //  if (typeof (check) != "undefined")
+           //      return res.send("Fucking user already exist");
+           // else
+           //  {
+           //      db.collection("user").insertOne({            
+           //  "rollNo" : req.body.rollNo,
+           //   "password" : req.body.password,},
+           //   function(err, result) {
+           //                      assert.equal(err, null);
+           //                      console.log("Inserted a document into the restaurants collection.");
+                               
+           //                      callback();
+
+
+           //                      });
+           //    }  
+
+                         
+        
+                 });  
+                               
+
+
+
        // console.log(req);
         // create a todo, information comes from AJAX request from Angular
       // console.log(req.body);
-       var todo = new Todo({            
-            rollNo : req.body.rollNo,
-            password : req.body.password,
-        });
-           // var todos=req;
+       // var todo = new Todo({            
+       //      rollNo : req.body.rollNo,
+       //      password : req.body.password,
+                   // var todos=req;
        //  // use mongoose to get all todos in the database
-        get and return all the todos after you create another
-            Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
-                if (err)
-                      res.send(err)
-                console.log(todos)
-                res.send(todos);
-             }
+       // get and return all the todos after you create another
+            // Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
+            //     if (err)
+            //           res.send(err)
+            //     console.log(todos)
+            //     res.send(todos);
+            //  }
 
 
 
@@ -110,9 +173,9 @@
             //     res.send(todos);
             // });
 
-        });
+  //      });
 
-    });
+//    });
     
     // application -------------------------------------------------------------
     app.get('/', function(req, res) {

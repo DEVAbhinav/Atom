@@ -14,12 +14,14 @@
             </form>
             <script type="text/javascript">
               $("#btm").click(function(){
-                  $.get( "http://localhost:8080/public/login", 
+                  $.post( "/login", 
 
                     { rollNo: $("#rollNo").val(),
                      password : $("#password").val()})
               .done(function( data ) {
                 var data=data;
+                 document.getElementById("rollNo").value="Welcome"+data;
+
                       // console.log(data);
               });
               });
