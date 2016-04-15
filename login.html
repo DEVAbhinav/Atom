@@ -15,9 +15,8 @@
             <script type="text/javascript">
               $("#btm").click(function(){
                   $.post( "/login", 
-
-                    { rollNo: $("#rollNo").val(),
-                     password : $("#password").val()})
+						{ rollNo: $("#rollNo").val(),
+                     	password : $("#password").val()})
               .done(function( data ) {
                 var data=data;
                 if(data=="Oh you are right!"){
