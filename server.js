@@ -1,8 +1,12 @@
 // server.js
 
     // set up ========================
-    var express  = require('express');
-    var app      = express();                               // create our app w/ express
+  var express = require('express');
+  var app = express();
+  var http = require('http').Server(app);
+  var io = require('socket.io')(http);
+
+
     var mongoose = require('mongoose');                     // mongoose for mongodb
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
@@ -76,7 +80,7 @@
                                                                      }
                         
                                                         }  
-
+                                                        
                                                         else
                                                         {
                                                             callback();
@@ -84,14 +88,14 @@
                                                         }    
 
 
-                                                
-                                    
-                                      
-                                        
                    });
 
             }
          });
+                                                
+                                    
+                                      
+                                        
 
 
 
@@ -255,8 +259,18 @@
     */
 
 
+    // socket programming
+
+    io.on("connection",function (socket) {
+        console.log("a user connected");
+    });
+
+
+
+
+
     // listen (start app with node server.js) ======================================
-    app.listen(8080);
+    http.listen(8080);
     console.log("App listening on port 8080");
 
 
