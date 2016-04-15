@@ -44,7 +44,7 @@
 
     app.get('/home', function(req, res) {
         
-             res.sendfile('./home.html');
+             res.sendfile("./home.html");
          });
 
 
@@ -58,32 +58,40 @@
         });
 
 
-            var validateandenter=function(db,callback){
-                var collection=db.collection("user");
-                collection.findOne({"rollNo": "req"},
-                    function (err,data) {
-                        console.log(data);
-                        if (data != null){
-                            if(data.password==req.body.password){
-                                callback();
-                                res.send("Oh you are right!");
-                            }
-                            else{
-                                callback();
-                                res.send("You try to fool me bastard!");
-                            }
+            var validateandenter= function(db,callback){
+               db.collection("user").findOne({            
+                                    "rollNo" : req.body.rollNo,
+                                     "password" : req.body.password,},
+                             function(err, data) {
+                                                assert.equal(err, null);
+                                                        if (data != null){
+                                                                 if(data.password==req.body.password    ){
+                                                                        callback();
+                                                                        console.log("password matched!");
+                                                                        res.send("Oh you are right!");
+                                                                    }
+                                                                    else{
+                                                                        callback();
+                                                                        res.send("You try to fool me bastard!");
+                                                                     }
                         
-                        }  
-                        
-                        else
-                        {
-                            callback();
-                            res.send("Invalid user");
-                        }
-                    });
+                                                        }  
+
+                                                        else
+                                                        {
+                                                            callback();
+                                                            res.send("Invalid user");
+                                                        }    
+
+
+                                                
+                                    
+                                      
+                                        
+                   });
 
             }
-    });
+         });
 
 
 
