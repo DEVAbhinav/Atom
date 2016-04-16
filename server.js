@@ -260,11 +260,28 @@
 
 
     // socket programming
+    var user = [];
     io.on('connection', function(socket){
         console.log("a user connected");
+  
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    io.emit('messages', msg);
   });
+  
+
+  socket.on('add-user',function(username){
+    if (username!=null && username!=''){
+        if(user.indexOf(username)==-1)
+            socket.emit('tryagain');
+        else
+            io.emit('messages',{user:username,msg:" joined"});
+    }
+  })
+
+
+
+
+
 });
     
  
