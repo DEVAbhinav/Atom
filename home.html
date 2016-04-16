@@ -24,15 +24,27 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
+var name;
   var socket = io();
   $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
+    socket.emit('chat message',{user:name, 'message':$('#m').val()} );
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-  });
+  // socket.on('chat message', function(msg){
+  //   $('#messages').append($('<li>').text(msg));
+  // });
+
+  prompt("Enter your name",function(username){
+  	name=username;
+	socket.emit("add-user",{"username":name});
+});
+
+
+  socket.on("messages",function(data){
+	$('#messages').append($('<li>').text(data.user+": "data.msg));
+
+  })
 </script>
 
   </body>
