@@ -260,6 +260,7 @@
 
 
     // socket programming
+    var name="";
     var user = [];
     io.on('connection', function(socket){
         console.log("a user connected");
@@ -274,8 +275,16 @@
         if(user.indexOf(username)==-1)
             socket.emit('tryagain');
         else
-            io.emit('messages',{user:username,msg:" joined"});
+            {io.emit('messages',{user:username,msg:" joined"});
+            name=username;
+
+        }
+
     }
+  });
+  socket.on('disconnect'function () {
+    io.emit('messages'{},{user:username,msg:" disconnected"})
+      // body...
   })
 
 
