@@ -213,21 +213,6 @@
 
 
 
-
-       // var todo = new Todo({            
-       //      rollNo : req.body.rollNo,
-       //      password : req.body.password,
-       
-//console.log (todo);
-       
-           // get and return all the todos after you create another
-            // Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
-            //     if (err)
-            //           res.send(err)
-            //     console.log(todos)
-            //     res.send(todos);
-            // });
-
   //      });
 
 //    });
@@ -299,7 +284,8 @@
 
 
     // listen (start app with node server.js) ======================================
-    http.listen(8080);
+    http.
+    (8080);
     console.log("App listening on port 8080");
 
 
