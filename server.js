@@ -271,19 +271,19 @@
   
 
   socket.on('add-user',function(username){
-    if (username!=null && username!=''){
+   // if (username!=null && username!=''){
         if(user.indexOf(username)==-1)
-            socket.emit('tryagain');
+            {io.emit('messages',{user:username.username,msg:" joined"});
+            name=username;}
         else
-            {io.emit('messages',{user:username,msg:" joined"});
-            name=username;
+            socket.emit('tryagain');
 
-        }
+        
 
-    }
-  });
+    });
+  
   socket.on('disconnect',function () {
-    io.emit('messages',{user:username,msg:" disconnected"})
+    io.emit('messages',{user:name,msg:" disconnected"})
       // body...
   })
 

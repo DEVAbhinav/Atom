@@ -4,11 +4,9 @@
     <title>Socket.IO chat</title>
 
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
 </script>
- <script src="bootbox.min.js"></script>
 
 
     <style>
@@ -34,27 +32,27 @@
 var name="";
   var socket = io();
   $('form').submit(function(){
-    socket.emit('chat message',{/*user:name, */'message':$('#m').val()} );
+    socket.emit('chat message',{user:name, 'msg':$('#m').val()} );
     $('#m').val('');
     return false;
   });
   // socket.on('chat message', function(msg){
   //   $('#messages').append($('<li>').text(msg));
   // });
-var promtname=function takename(message){
-  bootbox.prompt(message, function(username){
-  	if (username==null || username==""){
-         takename("Enter a valid name !");
+    function promtname(message){
+      var username=prompt(message);
+      	if (username==null || username==""){
+         promtname("Enter a valid name !");
               return ;
     }
   	name=username;
 	socket.emit("add-user",{"username":name});
-});
-  }
+};
+ 
 
 
   socket.on("messages",function(data){
-	$('#messages').append($('<li>').text(/*data.user+*/": "+data.message));
+	$('#messages').append($('<li>').text(data.user+": "+data.msg));
 
 	
 });
