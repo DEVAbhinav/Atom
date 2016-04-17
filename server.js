@@ -282,8 +282,8 @@
 
     }
   });
-  socket.on('disconnect'function () {
-    io.emit('messages'{},{user:username,msg:" disconnected"})
+  socket.on('disconnect',function () {
+    io.emit('messages',{user:username,msg:" disconnected"})
       // body...
   })
 

@@ -3,7 +3,14 @@
   <head>
     <title>Socket.IO chat</title>
 
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+</script>
+ <script src="bootbox.min.js"></script>
+
+
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -27,17 +34,19 @@
 var name="";
   var socket = io();
   $('form').submit(function(){
-    socket.emit('chat message',{user:name, 'message':$('#m').val()} );
+    socket.emit('chat message',{/*user:name, */'message':$('#m').val()} );
     $('#m').val('');
     return false;
   });
   // socket.on('chat message', function(msg){
   //   $('#messages').append($('<li>').text(msg));
   // });
-var promtname=function(message){
-  prompt(message, function(username){
-  	if (username==null || username=="")
-  		return promtname("Enter a valid name !");
+var promtname=function takename(message){
+  bootbox.prompt(message, function(username){
+  	if (username==null || username==""){
+         takename("Enter a valid name !");
+              return ;
+    }
   	name=username;
 	socket.emit("add-user",{"username":name});
 });
@@ -45,14 +54,14 @@ var promtname=function(message){
 
 
   socket.on("messages",function(data){
-	$('#messages').append($('<li>').text(data.user+": "+data.msg));
+	$('#messages').append($('<li>').text(/*data.user+*/": "+data.message));
 
 	
 });
 
 
 
-  socket.on('tryagain'function () {
+  socket.on('tryagain',function () {
   	promtname("Badluck username already exist!");
   
   });
