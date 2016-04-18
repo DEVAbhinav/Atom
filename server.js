@@ -240,8 +240,28 @@
             });
         });
     });
+*/
+    // var checkpresenceandadd = function(db,callback){
+    //         db.collection("user").findOne({"rollNo" : req.body.rollNo},function(err,doc){
+    //             if(err)
+    //                 return console.log(err);
 
-    */
+    //              if (doc != null){
+    //                 callback();
+    //             return res.send({"status":"Fucking user already exist",});}
+    //        else
+    //         {
+    //             db.collection("user").insertOne({            
+    //         "rollNo" : req.body.rollNo,
+    //          "password" : req.body.password,},
+    //          function(err, result) {
+    //                             assert.equal(err, null);
+    //                             console.log("Inserted a document into the User collection.");
+                               
+    //                             callback();
+    //                             res.send("done");
+
+
 
 
     // socket programming
@@ -259,7 +279,9 @@
    // if (username!=null && username!=''){
         if(user.indexOf(username)==-1)
             {io.emit('messages',{user:username.username,msg:" joined"});
-            name=username;}
+            name=username;
+            user.push(name);
+        }
         else
             socket.emit('tryagain');
 
