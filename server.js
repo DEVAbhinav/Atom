@@ -49,8 +49,10 @@
 // routes ======================================================================
 
     app.get('/home', function(req, res) {
-        
+        if (req.session.user_logged);
              res.sendfile("./home.html");
+             else
+                res.redirect('/login');
          });
 
 
@@ -74,6 +76,7 @@
                                                                  if(data.password==req.body.password    ){
                                                                         callback();
                                                                         console.log("password matched!");
+                                                                        req.session.user_logged=req.body.rollNo;
                                                                         res.send("Oh you are right!");
                                                                     }
                                                                     else{
@@ -99,38 +102,13 @@
                                       
                                         
 
-
-
-
-
-    //     var pass=todo.findOne({ 'rollNo':req.body.rollNo }, function (err, todo) {
-    //   if (err) return handleError(err);
-    //   if(pass.password==req.body.password){
-    //    var sess=req.session;
-    //    console.log("Welcome"+sess);
-    //   }
-
-    // })
-    // })
-    //         //  api ---------------------------------------------------------------------
-            //get all todos
     app.get('/login', function(req, res) {
-        //console.log(req.body.do);
-      // if (req.params.do=="just load it!")
+       if (!(req.session.user_logged))
              res.sendfile('./login.html');
+         else
+            res.redirect('/home');
             
-       //  else{   var todos=req;
-       //  // use mongoose to get all todos in the database
-       // Todo.find(function(err, todos) {
-       //          if (err)
-       //              res.send(err)
-               
-       //              if (todos.password)
-       //                      console.log('User exist');
-       //         //res.send(req);
-       //         //res.json(todos);
-       //      });
-       //  }
+       
     });
 
     // create todo and send back all todos after creation
@@ -139,7 +117,7 @@
               assert.equal(null, err);
               checkpresenceandadd(db, function() {
                   db.close();
-                 // return "done"
+                 
           });
         });
 
@@ -197,28 +175,8 @@
 
 
 
-       // console.log(req);
-        // create a todo, information comes from AJAX request from Angular
-      // console.log(req.body);
-       // var todo = new Todo({            
-       //      rollNo : req.body.rollNo,
-       //      password : req.body.password,
-                   // var todos=req;
-       //  // use mongoose to get all todos in the database
-       // get and return all the todos after you create another
-            // Todo.find({ 'rollNo':req.body.rollNo },function(err, todos) {
-            //     if (err)
-            //           res.send(err)
-            //     console.log(todos)
-            //     res.send(todos);
-            //  }
-
-
-
-  //      });
-
-//    });
-    
+       
+ 
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
@@ -271,6 +229,10 @@
     var user = [];
     io.on('connection', function(socket){
         console.log("a user connected");
+
+name=req.session.user_logged;
+
+
 //adding user to their respective channelor gropp;
   socket.on('add-user-to-group',function(username){
    // if (username!=null && username!=''){
