@@ -45,14 +45,21 @@ var name="";
          promtname("Enter a valid name !");
               return ;
     }
+    name=username;
+     
       var touser=prompt("Enter another user name to private chat with");
+      if  (touser==null || touser==""){
+	socket.emit("add-user-to-group",{"username":name});
 
-
-  	name=username;
-	socket.emit("add-user",{"username":name});
-};
+    };
+    else{
+      socket.emit('private-chat',{
+        "username":name;
+        "touser":touser;
+      });
+    }
  
-
+};
 
   socket.on("messages",function(data){
 	$('#messages').append($('<li>').text(data.user+": "+data.msg));

@@ -282,7 +282,7 @@
            var collection= db.collection("user");
            collection.update({"rollNo":msg.user},
            {
-            $push : {"messages.":}
+            $push : {messages.(touser) : msg.msg}
            })
         }
 
@@ -293,7 +293,7 @@
   });
   
 
-  socket.on('add-user',function(username){
+  socket.on('add-user-to-group',function(username){
    // if (username!=null && username!=''){
         if(user.indexOf(username)==-1)
             {io.emit('messages',{user:username.username,msg:" joined"});
