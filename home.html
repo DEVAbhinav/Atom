@@ -36,25 +36,22 @@ var name="";
     $('#m').val('');
     return false;
   });
+
+  var touser='';
   // socket.on('chat message', function(msg){
   //   $('#messages').append($('<li>').text(msg));
   // });
     function promtname(message){
-      var username=prompt(message);
-      	if (username==null || username==""){
-         promtname("Enter a valid name !");
-              return ;
-    }
-    name=username;
+       
      
-      var touser=prompt("Enter another user name to private chat with");
+      touser=prompt("Enter another username to private chat with");
       if  (touser==null || touser==""){
 	socket.emit("add-user-to-group",{"username":name});
 
     };
     else{
-      socket.emit('private-chat',{
-        "username":name;
+      socket.emit('add-user-to-private-chat',{
+        
         "touser":touser;
       });
     }

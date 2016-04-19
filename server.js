@@ -47,7 +47,7 @@
 
 
 // routes ======================================================================
-
+var name="";
     app.get('/home', function(req, res) {
         if (req.session.user_logged);
              res.sendfile("./home.html");
@@ -77,6 +77,7 @@
                                                                         callback();
                                                                         console.log("password matched!");
                                                                         req.session.user_logged=req.body.rollNo;
+                                                                        name=req.session.user_logged;
                                                                         res.send("Oh you are right!");
                                                                     }
                                                                     else{
@@ -225,12 +226,12 @@
 
 
     // socket programming
-    var name="";
+    
     var user = [];
     io.on('connection', function(socket){
         console.log("a user connected");
 
-name=req.session.user_logged;
+    name=req.session.user_logged;
 
 
 //adding user to their respective channelor gropp;
@@ -250,10 +251,10 @@ name=req.session.user_logged;
   
   //add user to private chat
 
-  socket.on('add-user-to-private-chat',function(username){
+  socket.on('add-user-to-private-chat',function(data){
    // if (username!=null && username!=''){
-        if(user.indexOf(username)==-1)
-            {io.emit('messages',{user:username.username,msg:" joined"});
+        socket.join(name+'_'+data.touser)
+            {io.to(name+'_'+data.touer).emit('messages',{user:name,msg:" joined"});
             name=username;
             user.push(name);
         }
