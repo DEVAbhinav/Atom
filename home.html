@@ -45,6 +45,9 @@ var name="";
          promtname("Enter a valid name !");
               return ;
     }
+      var touser=prompt("Enter another user name to private chat with");
+
+
   	name=username;
 	socket.emit("add-user",{"username":name});
 };
@@ -56,6 +59,8 @@ var name="";
 
 	
 });
+
+
 
 
 

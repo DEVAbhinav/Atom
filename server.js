@@ -272,6 +272,24 @@
   
   socket.on('chat message', function(msg){
     io.emit('messages', msg);
+    //add chat to db.
+    var touser=msg.touser;
+
+    MongoClient.connect(url,function(err,db){
+        assert.equal(null,err);
+
+        function addmessage(db,callback){
+           var collection= db.collection("user");
+           collection.update({"rollNo":msg.user},
+           {
+            $push : {"messages.":}
+           })
+        }
+
+    })
+
+
+
   });
   
 
