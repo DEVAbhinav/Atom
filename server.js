@@ -6,7 +6,8 @@
   var http = require('http').Server(app);
   var io = require('socket.io')(http);
 
-
+    var cookieParser = require('cookie-parser');
+    var session = require('express-session');
     var mongoose = require('mongoose');                     // mongoose for mongodb
     var morgan = require('morgan');             // log requests to the console (express4)
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
@@ -33,7 +34,8 @@
     app.use(bodyParser.json());                                     // parse application/json
     app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
     app.use(methodOverride());
-   // app.use(session({secret: 'ssshhhhh'}));
+    app.use(cookieParser());
+    app.use(session({secret: 'ssshhhhh'}));
 
     
     // // define model =================
@@ -269,7 +271,43 @@
     var user = [];
     io.on('connection', function(socket){
         console.log("a user connected");
+//adding user to their respective channelor gropp;
+  socket.on('add-user-to-group',function(username){
+   // if (username!=null && username!=''){
+        if(user.indexOf(username)==-1)
+            {io.emit('messages',{user:username.username,msg:" joined"});
+            name=username;
+            user.push(name);
+        }
+        else
+            socket.emit('tryagain');
+
+        
+
+    });
   
+  //add user to private chat
+
+  socket.on('add-user-to-private-chat',function(username){
+   // if (username!=null && username!=''){
+        if(user.indexOf(username)==-1)
+            {io.emit('messages',{user:username.username,msg:" joined"});
+            name=username;
+            user.push(name);
+        }
+        else
+            socket.emit('tryagain');
+
+        
+
+    });
+  
+
+
+
+
+
+
   socket.on('chat message', function(msg){
     io.emit('messages', msg);
     //add chat to db.
@@ -291,21 +329,6 @@
 
 
   });
-  
-
-  socket.on('add-user-to-group',function(username){
-   // if (username!=null && username!=''){
-        if(user.indexOf(username)==-1)
-            {io.emit('messages',{user:username.username,msg:" joined"});
-            name=username;
-            user.push(name);
-        }
-        else
-            socket.emit('tryagain');
-
-        
-
-    });
   
   socket.on('disconnect',function () {
     io.emit('messages',{user:name,msg:" disconnected"})
