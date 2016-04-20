@@ -179,14 +179,7 @@ var name="";
     //             db.collection("user").insertOne({            
     //         "rollNo" : req.body.rollNo,
     //          "password" : req.body.password,},
-    //          function(err, result) {
-    //                             assert.equal(err, null);
-    //                             console.log("Inserted a document into the User collection.");
-                               
-    //                             callback();
-    //                             res.send("done");
-
-
+    //          function(err, res
 
 
     // socket programming
@@ -238,23 +231,17 @@ var name="";
                 });
 
             }
-            add_value_to_user_array(db,function(){
-                console.log("user array successfully updated");
-                db.close();
-            });
-
-
-        })
-
-
             check_and_add_value_to_user_array(db,function(){
                 console.log("user array successfully updated");
                 db.close();
             });
 
 
-        })
+        });
+    });
 
+
+            
 
 
         socket.join(private_channel);
