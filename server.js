@@ -150,29 +150,10 @@ var name="";
 
             });
         }
-           // console.log(check);
-
-           //  if (typeof (check) != "undefined")
-           //      return res.send("Fucking user already exist");
-           // else
-           //  {
-           //      db.collection("user").insertOne({            
-           //  "rollNo" : req.body.rollNo,
-           //   "password" : req.body.password,},
-           //   function(err, result) {
-           //                      assert.equal(err, null);
-           //                      console.log("Inserted a document into the restaurants collection.");
-                               
-           //                      callback();
-
-
-           //                      });
-           //    }  
-
+           
                          
         
                  });  
-                               
 
 
 
@@ -184,24 +165,7 @@ var name="";
     });
 
 
-    // delete a todo
-   /*
-    app.delete('/api/todos/:todo_id', function(req, res) {
-        Todo.remove({
-            _id : req.params.todo_id
-        }, function(err, todo) {
-            if (err)
-                res.send(err);
-
-            // get and return all the todos after you create another
-            Todo.find(function(err, todos) {
-                if (err)
-                    res.send(err)
-                res.json(todos);
-            });
-        });
-    });
-*/
+    
     // var checkpresenceandadd = function(db,callback){
     //         db.collection("user").findOne({"rollNo" : req.body.rollNo},function(err,doc){
     //             if(err)
@@ -253,13 +217,55 @@ var name="";
 
   socket.on('add-user-to-private-chat',function(data){
    // if (username!=null && username!=''){
-        socket.join(name+'_'+data.touser)
-            {io.to(name+'_'+data.touer).emit('messages',{user:name,msg:" joined"});
-            name=username;
-            user.push(name);
-        }
-        else
-            socket.emit('tryagain');
+        var private_channel = name+'_'+data.touser;
+        MongoClient.connect(url,function(err,db){
+            assert.equal(null,err);
+
+            function check_and_add_value_to_user_array(db,callback){
+               
+
+
+
+                db.collection('user').update({
+                    rollNo:name,
+                    user: {$in : [data.touser]}
+                }
+                {$push: {
+                    user:data.touser ;
+
+                        }
+
+                });
+
+            }
+            add_value_to_user_array(db,function(){
+                console.log("user array successfully updated");
+                db.close();
+            });
+
+
+        })
+
+
+            check_and_add_value_to_user_array(db,function(){
+                console.log("user array successfully updated");
+                db.close();
+            });
+
+
+        })
+
+
+
+        socket.join(private_channel);
+            io.to(private_channel).emit('messages',{
+                user:name, 
+                msg:" joined"});
+
+           // name=username;
+            user.push(data.touser);
+        
+            //socket.emit('tryagain');
 
         
 

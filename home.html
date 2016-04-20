@@ -29,7 +29,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var name="";
+var name='@Request.RequestContext.HttpContext.Session["user_logged"]';;
   var socket = io();
   $('form').submit(function(){
     socket.emit('chat message',{user:name, 'msg':$('#m').val()} );
