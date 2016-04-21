@@ -221,8 +221,7 @@ var name="";
 
                 db.collection('user').update({
                     rollNo:name,
-                    //user: {$in : [data.touser]
-                    }
+                    //user: {$in : [data.touser] }
                 }
                 {$addToSet: {
                     user:data.touser ;
@@ -239,16 +238,45 @@ var name="";
 
 
         });
+
+
+         socket.join(private_channel);
+            io.to(private_channel).emit('messages',{
+                user:name, 
+                msg:" joined"});
+
+
+
+        MongoClient.connect(url,function(err,db){
+            assert.equal(null,err);
+
+            function update_request_to_join_chat(){
+                db.collection("user").update({
+                    rollNo:data.touser;
+                },
+                {
+                    $addToSet: {
+                    request:private_channel ;
+
+                        }
+                }
+
+
+
+                )
+            }
+
+
+
+        })  
+
     });
 
 
             
 
 
-        socket.join(private_channel);
-            io.to(private_channel).emit('messages',{
-                user:name, 
-                msg:" joined"});
+       
 
            // name=username;
             user.push(data.touser);
