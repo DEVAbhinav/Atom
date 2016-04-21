@@ -221,9 +221,10 @@ var name="";
 
                 db.collection('user').update({
                     rollNo:name,
-                    user: {$in : [data.touser]}
+                    //user: {$in : [data.touser]
+                    }
                 }
-                {$push: {
+                {$addToSet: {
                     user:data.touser ;
 
                         }
