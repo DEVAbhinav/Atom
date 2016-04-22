@@ -191,7 +191,7 @@ var name="";
     name=req.session.user_logged;
 
 
-//adding user to their respective channelor gropp;
+//adding user to their respective channel group;
   socket.on('add-user-to-group',function(username){
    // if (username!=null && username!=''){
         if(user.indexOf(username)==-1)
@@ -256,7 +256,8 @@ var name="";
                 },
                 {
                     $addToSet: {
-                    request:private_channel ;
+                    channel:private_channel,
+                     user:name ;
 
                         }
                 }
