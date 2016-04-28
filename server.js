@@ -156,7 +156,29 @@ var name="";
                  });  
 
 
+    app.post('/request_list',function(req,res){
+        MongoClient.connect(url,function(err,db){
+          assert.equal(err,null);
+          sendrequests(db,function(){
+            db.close();
+          })
 
+          function sendrequests(db,callback){
+            db.collection.findOne({rollNo:},
+              function(err,data){
+                if (err){
+                  callback();
+                  console.log(err);
+                 return res.send(err);
+                }
+                else
+                res.send({
+                  requests: data.channel;
+                });
+              });
+          }
+        })
+    })
        
  
     // application -------------------------------------------------------------
@@ -229,6 +251,7 @@ var name="";
                         }
 
                 });
+                callback();
 
             }
             check_and_add_value_to_user_array(db,function(){
@@ -250,7 +273,7 @@ var name="";
         MongoClient.connect(url,function(err,db){
             assert.equal(null,err);
 
-            function update_request_to_join_chat(){
+            function update_request_to_join_chat(db,callback){
                 db.collection("user").update({
                     rollNo:data.touser;
                 },
@@ -262,10 +285,12 @@ var name="";
                         }
                 }
 
-
-
-                )
+              )callback();
             }
+            update_request_to_join_chat(db,function(){
+              console.log("request array updated!");
+              db.close();
+            })
 
 
 

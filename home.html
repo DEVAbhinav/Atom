@@ -42,11 +42,22 @@ var name='@Request.RequestContext.HttpContext.Session["user_logged"]';;
   //   $('#messages').append($('<li>').text(msg));
   // });
    
+    //showing request
+    $(document).load(function(){
+      $.post('/request_list',
+          function(data){
+            if(data.requests) 
+            request_list = alert('you have following friend requests'+'/br'+ data.requests);
+      })
+    })
+    //request_list = alert('you have following friend requests'+'/br'+requests);
+
+
 
 
     function promtname(message){
        
-     
+      //request_list = alert('you have following friend requests'+'/br'+requests);
       touser=prompt("Enter another username to private chat with");
       if  (touser==null || touser==""){
 	socket.emit("add-user-to-group",{"username":name});
