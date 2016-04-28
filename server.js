@@ -324,19 +324,23 @@ var name="";
     io.emit('messages', msg);
     //add chat to db.
     var touser=msg.touser;
-
+    var x= "messages"+'.'+touser;
     MongoClient.connect(url,function(err,db){
         assert.equal(null,err);
+        addmessage_to_db(db,function(){
+          db.close();
+        })
+      });
 
-        function addmessage(db,callback){
+        function addmessage_to_db(db , callback){
            var collection= db.collection("user");
-           collection.update({"rollNo":msg.user},
+           collection.update({"rollNo":name},
            {
-            $push : { "messages".touser : msg.msg}
-           })
+            $push : {x : msg.msg}
+           });
         }
 
-    })
+    
 
 
 
@@ -351,7 +355,7 @@ var name="";
 
 
 
-});
+
     
  
 
@@ -359,8 +363,7 @@ var name="";
 
 
     // listen (start app with node server.js) ======================================
-    http.
-    (8080);
+    http.listen(8080);
     console.log("App listening on port 8080");
 
 
