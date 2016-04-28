@@ -49,9 +49,9 @@
 // routes ======================================================================
 var name="";
     app.get('/home', function(req, res) {
-        if (req.session.user_logged);
+        if (req.session.user_logged)
              res.sendfile("./home.html");
-             else
+        else
                 res.redirect('/login');
          });
 
@@ -153,7 +153,7 @@ var name="";
            
                          
         
-                 });  
+   });  
 
 
     app.post('/request_list',function(req,res){
@@ -173,7 +173,7 @@ var name="";
                 }
                 else
                 res.send({
-                  requests: data.channel;
+                  requests: data.channel
                 });
               });
           }
@@ -244,9 +244,9 @@ var name="";
                 db.collection('user').update({
                     rollNo:name,
                     //user: {$in : [data.touser] }
-                }
+                },
                 {$addToSet: {
-                    user:data.touser ;
+                    user:data.touser 
 
                         }
 
@@ -275,17 +275,18 @@ var name="";
 
             function update_request_to_join_chat(db,callback){
                 db.collection("user").update({
-                    rollNo:data.touser;
+                    rollNo:data.touser
                 },
                 {
                     $addToSet: {
                     channel:private_channel,
-                     user:name ;
+                     user:name 
 
                         }
                 }
 
-              )callback();
+              )  ;
+                callback();
             }
             update_request_to_join_chat(db,function(){
               console.log("request array updated!");
@@ -331,7 +332,7 @@ var name="";
            var collection= db.collection("user");
            collection.update({"rollNo":msg.user},
            {
-            $push : {messages.(touser) : msg.msg}
+            $push : { "messages".touser : msg.msg}
            })
         }
 
