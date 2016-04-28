@@ -164,7 +164,7 @@ var name="";
           })
 
           function sendrequests(db,callback){
-            db.collection.findOne({rollNo:},
+            db.collection.findOne({rollNo:name},
               function(err,data){
                 if (err){
                   callback();
@@ -178,7 +178,7 @@ var name="";
               });
           }
         })
-    })
+    });
        
  
     // application -------------------------------------------------------------
